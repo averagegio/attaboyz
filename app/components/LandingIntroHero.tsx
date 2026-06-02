@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { HeroSignupForm } from "@/app/components/HeroSignupForm";
+import { HeroHandleForm } from "@/app/components/HeroHandleForm";
 import { LANDING_INTRO_FADE_DISTANCE_PX } from "@/lib/landing-hero";
 
 /**
@@ -88,7 +88,7 @@ export function LandingIntroHero() {
           Full-stack sites, agents, and secure infrastructure for the next generation of the web.
         </p>
 
-        <HeroSignupForm />
+        <HeroHandleForm />
       </div>
     </div>
   );

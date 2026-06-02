@@ -88,4 +88,113 @@ body {
     transform: none;
     filter: none;
   }
+
+  .pricing-card {
+    animation: none;
+  }
+
+  .pricing-card::before {
+    animation: none;
+    opacity: 0.75;
+  }
+
+  .pricing-card:hover {
+    transform: none;
+  }
+}
+
+@keyframes pricing-border-glint {
+  0%,
+  100% {
+    background-position: 0% 50%;
+    opacity: 0.65;
+  }
+  50% {
+    background-position: 100% 50%;
+    opacity: 1;
+  }
+}
+
+.pricing-card {
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+  background: #000000;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+}
+
+.pricing-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 2px;
+  background: linear-gradient(
+    125deg,
+    var(--attaboy-cyan) 0%,
+    rgba(0, 240, 255, 0.35) 22%,
+    var(--attaboy-magenta) 50%,
+    rgba(255, 0, 170, 0.35) 78%,
+    var(--attaboy-cyan) 100%
+  );
+  background-size: 220% 220%;
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: pricing-border-glint 3.5s ease-in-out infinite;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.pricing-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.pricing-card:hover {
+  transform: translateY(-8px) scale(1.015);
+  box-shadow:
+    0 0 24px rgba(0, 240, 255, 0.28),
+    0 0 48px rgba(255, 0, 170, 0.18),
+    0 24px 48px rgba(0, 0, 0, 0.55);
+}
+
+.pricing-card:hover::before {
+  animation-duration: 1.8s;
+  opacity: 1;
+  padding: 2.5px;
+  background: linear-gradient(
+    125deg,
+    var(--attaboy-cyan) 0%,
+    #ffffff 25%,
+    var(--attaboy-magenta) 50%,
+    #ffffff 75%,
+    var(--attaboy-cyan) 100%
+  );
+  background-size: 220% 220%;
+}
+
+.pricing-card--highlight::before {
+  padding: 2.5px;
+  background: linear-gradient(
+    125deg,
+    var(--attaboy-magenta) 0%,
+    var(--attaboy-cyan) 35%,
+    var(--attaboy-magenta) 65%,
+    var(--attaboy-cyan) 100%
+  );
+  background-size: 220% 220%;
+  animation-duration: 2.8s;
+}
+
+.pricing-card--highlight:hover {
+  box-shadow:
+    0 0 28px rgba(255, 0, 170, 0.32),
+    0 0 52px rgba(0, 240, 255, 0.22),
+    0 28px 56px rgba(0, 0, 0, 0.6);
 }
