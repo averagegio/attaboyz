@@ -19,12 +19,6 @@ type SiteHeaderProps = {
   variant?: "hero" | "solid";
 };
 
-const heroNavLink =
-  "rounded-lg px-3 py-2 text-sm font-semibold text-white/90 outline-none transition [text-shadow:0_2px_12px_rgba(0,0,0,0.65)] group-hover/header:text-white group-hover/header:[text-shadow:none] group-hover/header:hover:bg-white/10 focus-visible:ring-2 focus-visible:ring-cyan-300/60";
-
-const solidNavLink =
-  "rounded-lg px-3 py-2 text-sm font-semibold text-white/75 transition hover:bg-white/10 hover:text-white focus-visible:ring-2 focus-visible:ring-cyan-300/60";
-
 export function SiteHeader({ variant = "solid" }: SiteHeaderProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [portalEl, setPortalEl] = useState<HTMLElement | null>(null);
@@ -61,23 +55,13 @@ export function SiteHeader({ variant = "solid" }: SiteHeaderProps) {
             ].join(" ")}
           />
 
-          <nav className="hidden items-center gap-1 md:flex">
-            {navLinks.map((link) => (
-              <Link key={link.href} href={link.href} className={isHero ? heroNavLink : solidNavLink}>
-                {link.label}
-              </Link>
-            ))}
-          </nav>
-
-          <div className="flex items-center md:hidden">
-            <HamburgerButton open={menuOpen} onClick={() => setMenuOpen((open) => !open)} />
-          </div>
+          <HamburgerButton open={menuOpen} onClick={() => setMenuOpen((open) => !open)} />
         </div>
       </div>
 
       <div
         className={[
-          "mx-auto max-w-6xl overflow-hidden px-3 transition-[max-height,opacity,margin] duration-300 sm:px-6 md:hidden",
+          "mx-auto max-w-6xl overflow-hidden px-3 transition-[max-height,opacity,margin] duration-300 sm:px-6",
           menuOpen ? "mt-2 max-h-[28rem] opacity-100" : "max-h-0 opacity-0",
         ].join(" ")}
       >
