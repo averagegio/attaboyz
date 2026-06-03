@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
 import { getStripe } from "@/lib/stripe-server";
+import { recordHandlePurchase } from "@/lib/user-handles";
 
 export const runtime = "nodejs";
 
@@ -28,9 +29,21 @@ export async function POST(req: NextRequest) {
     switch (event.type) {
       case "checkout.session.completed": {
         const session = event.data.object as Stripe.Checkout.Session;
+        const type = session.metadata?.type;
+
+        if (type === "bid" && session.metadata?.handle) {
+          await recordHandlePurchase({
+            userId: session.metadata.userId ?? null,
+            email: session.customer_details?.email ?? session.customer_email,
+            handle: session.metadata.handle,
+            platform: session.metadata.platform ?? "all",
+            amountUsd: session.metadata.amountUsd ? Number(session.metadata.amountUsd) : undefined,
+          });
+        }
+
         console.info("[stripe webhook] checkout completed", {
           id: session.id,
-          type: session.metadata?.type,
+          type,
           handle: session.metadata?.handle,
           tier: session.metadata?.tier,
         });

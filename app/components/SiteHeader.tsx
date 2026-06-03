@@ -7,9 +7,12 @@ import { HamburgerButton } from "@/app/components/HamburgerButton";
 import { LogoHomeLink } from "@/app/components/LogoHomeLink";
 
 const navLinks = [
+  { href: "/dashboard", label: "Dashboard" },
   { href: "/store", label: "Store" },
   { href: "/about", label: "About" },
   { href: "/pricing", label: "Pricing" },
+  { href: "/contact", label: "Contact" },
+  { href: "/auth", label: "Log in" },
 ];
 
 type SiteHeaderProps = {
@@ -75,7 +78,7 @@ export function SiteHeader({ variant = "solid" }: SiteHeaderProps) {
       <div
         className={[
           "mx-auto max-w-6xl overflow-hidden px-3 transition-[max-height,opacity,margin] duration-300 sm:px-6 md:hidden",
-          menuOpen ? "mt-2 max-h-80 opacity-100" : "max-h-0 opacity-0",
+          menuOpen ? "mt-2 max-h-[28rem] opacity-100" : "max-h-0 opacity-0",
         ].join(" ")}
       >
         <nav className="rounded-2xl border border-white/10 bg-black/60 p-2 backdrop-blur-xl">

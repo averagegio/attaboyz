@@ -54,3 +54,31 @@ export const ATTABOY_PLANS: Plan[] = [
 
 export const MIN_BID_USD = 49;
 export const SUGGESTED_BID_USD = 99;
+
+export const CONSULTING_PRICE_USD = 8000;
+
+/** All subscription features plus consulting-only deliverables. */
+export const CONSULTING_PLAN = {
+  id: "consulting" as const,
+  name: "ATTABOY Consulting",
+  price: "$8,000",
+  cadence: "one-time",
+  blurb: "White-glove build — every marketplace feature plus a full site, deployment, and agents.",
+  highlight: true,
+  features: [
+    "Up to 5 handle searches / day",
+    "X, Instagram, TikTok, GitHub checks",
+    "Email alerts when status changes",
+    "Unlimited AI handle searches",
+    "Place bids on available @ names",
+    "Priority acquisition concierge",
+    "Web-wide availability intel",
+    "Everything in Marketplace Pro",
+    "Custom site + AI agent builds",
+    "Dedicated success manager",
+    "SLA-backed secure deployments",
+    "Website building",
+    "Full stack deployment",
+    "Agent integration",
+  ],
+};

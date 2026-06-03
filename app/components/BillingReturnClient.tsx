@@ -18,6 +18,20 @@ export function BillingReturnClient() {
     setStatus("ok");
   }, [sessionId]);
 
+  const title =
+    type === "bid"
+      ? "Bid received"
+      : type === "consulting"
+        ? "Consulting booked"
+        : "Subscription active";
+
+  const description =
+    type === "bid"
+      ? "Your @ name purchase is recorded. View it under My @'s on your dashboard."
+      : type === "consulting"
+        ? "Thanks — our team will reach out to kick off your full build."
+        : "Welcome aboard. Your plan is active — start searching @ names in the marketplace.";
+
   if (status === "loading") {
     return <p className="text-white/70">Confirming your checkout…</p>;
   }
@@ -26,8 +40,8 @@ export function BillingReturnClient() {
     return (
       <div className="space-y-4">
         <p className="text-rose-200">Missing checkout session. If you were charged, contact support with your receipt.</p>
-        <Link href="/store" className="attaboy-cta inline-flex rounded-full px-5 py-2 text-sm font-bold">
-          Back to store
+        <Link href="/dashboard" className="attaboy-cta inline-flex rounded-full px-5 py-2 text-sm font-bold">
+          Dashboard
         </Link>
       </div>
     );
@@ -35,23 +49,17 @@ export function BillingReturnClient() {
 
   return (
     <div className="space-y-4">
-      <h1 className="text-2xl font-semibold sm:text-3xl">
-        {type === "bid" ? "Bid received" : "Subscription active"}
-      </h1>
-      <p className="max-w-xl text-white/70">
-        {type === "bid"
-          ? "Your @ name bid is in. ATTABOY will pursue acquisition and follow up on the email you used at checkout."
-          : "Welcome aboard. Your plan is active — start searching @ names in the marketplace."}
-      </p>
+      <h1 className="text-2xl font-semibold sm:text-3xl">{title}</h1>
+      <p className="max-w-xl text-white/70">{description}</p>
       <div className="flex flex-wrap gap-3 pt-2">
-        <Link href="/store" className="attaboy-cta inline-flex rounded-full px-5 py-2.5 text-sm font-bold">
-          Open marketplace
+        <Link href="/dashboard" className="attaboy-cta inline-flex rounded-full px-5 py-2.5 text-sm font-bold">
+          Open dashboard
         </Link>
         <Link
-          href="/"
+          href="/store"
           className="inline-flex rounded-full border border-white/15 px-5 py-2.5 text-sm font-semibold text-white/80 hover:bg-white/10"
         >
-          Home
+          @ store
         </Link>
       </div>
     </div>

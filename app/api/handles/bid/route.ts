@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { normalizeHandle } from "@/lib/handles";
 import { MIN_BID_USD } from "@/lib/pricing";
+import { getSessionFromCookies } from "@/lib/session";
 import { getAppOrigin, getStripe, isStripeConfigured } from "@/lib/stripe-server";
 
 export const runtime = "nodejs";
@@ -48,6 +49,7 @@ export async function POST(req: NextRequest) {
   const customerEmail = normalizeEmail(parsed.email);
   const platform = typeof parsed.platform === "string" ? parsed.platform.slice(0, 32) : "all";
   const origin = getAppOrigin(req);
+  const sessionUser = await getSessionFromCookies();
 
   try {
     const stripe = getStripe();
@@ -66,10 +68,18 @@ export async function POST(req: NextRequest) {
           quantity: 1,
         },
       ],
-      success_url: `${origin}/billing/return?session_id={CHECKOUT_SESSION_ID}&type=bid`,
+      success_url: `${origin}/billing/return?session_id={CHECKOUT_SESSION_ID}&type=bid&handle=${encodeURIComponent(handle)}`,
       cancel_url: `${origin}/store?handle=${encodeURIComponent(handle)}&canceled=1`,
-      metadata: { type: "bid", handle, platform, amountUsd: String(amountUsd) },
-      ...(customerEmail ? { customer_email: customerEmail } : {}),
+      metadata: {
+        type: "bid",
+        handle,
+        platform,
+        amountUsd: String(amountUsd),
+        ...(sessionUser ? { userId: sessionUser.sub } : {}),
+      },
+      ...(customerEmail || sessionUser?.email
+        ? { customer_email: customerEmail ?? sessionUser?.email }
+        : {}),
     });
 
     if (!session.url) {

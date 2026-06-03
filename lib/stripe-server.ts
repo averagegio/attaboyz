@@ -25,6 +25,11 @@ export function getPriceIdForTier(tier: SubscriptionTier): string | null {
   return id && id.length > 0 ? id : null;
 }
 
+export function getConsultingPriceId(): string | null {
+  const id = process.env.STRIPE_PRICE_CONSULTING;
+  return id && id.length > 0 ? id : null;
+}
+
 export function getAppOrigin(req: Request): string {
   const fromEnv = process.env.NEXT_PUBLIC_APP_URL?.replace(/\/$/, "");
   if (fromEnv) return fromEnv;

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { ConsultingCard } from "@/app/components/ConsultingCard";
 import { PricingCards } from "@/app/components/PricingCards";
 import { PageShell } from "@/app/components/SiteHeader";
 
@@ -14,7 +15,7 @@ type Props = {
 
 export default async function PricingPage({ searchParams }: Props) {
   const sp = await searchParams;
-  const showCanceled = sp.canceled === "1";
+  const showCanceled = sp.canceled === "1" || sp.canceled === "consulting";
 
   return (
     <PageShell>
@@ -34,6 +35,19 @@ export default async function PricingPage({ searchParams }: Props) {
         ) : null}
 
         <PricingCards />
+
+        <section className="space-y-4 border-t border-white/10 pt-10">
+          <div className="max-w-3xl space-y-2">
+            <p className="text-xs font-semibold uppercase tracking-[0.3em] text-fuchsia-300/85">Consulting</p>
+            <h2 className="text-2xl font-semibold tracking-tight sm:text-3xl">Full build package</h2>
+            <p className="text-base leading-relaxed text-white/65">
+              Everything in our subscription plans plus website building, full stack deployment, and agent integration.
+            </p>
+          </div>
+          <div className="max-w-xl">
+            <ConsultingCard />
+          </div>
+        </section>
 
         <p className="text-center text-sm text-white/45">
           Need a one-off @ bid instead?{" "}
